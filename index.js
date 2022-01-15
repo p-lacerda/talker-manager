@@ -10,6 +10,7 @@ const {
   dateVerification,
   talkVerification,
   addUser,
+  putTalk,
 } = require('./middlewares/middleManager');
 const { 
   passwordVerification,
@@ -36,6 +37,9 @@ app.post('/login', passwordVerification, emailVerification, loginVerification);
 
 app.post('/talker', tokenVerification,
 nameVerification, ageVerification, talkVerification, rateVerification, dateVerification, addUser);
+
+app.put('/talker/:id', tokenVerification,
+nameVerification, ageVerification, rateVerification, talkVerification, dateVerification, putTalk);
 
 app.listen(PORT, () => {
   console.log('Online');
