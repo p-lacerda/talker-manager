@@ -26,7 +26,7 @@ function passwordVerification(req, res, next) {
 }
 
 function loginVerification(req, res) {
-  return res.status(200).json({ token:
+  res.status(200).json({ token:
     '7mqaVRXJSp886CGr',
   });
 }

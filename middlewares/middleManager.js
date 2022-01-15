@@ -12,7 +12,7 @@ const readTalkers = async (req, res) => {
     return res.status(200).json([]);
   }
 
-  return res.status(200).json(data);
+  res.status(200).json(data);
 };
 
 const searchTalkers = async (req, res) => {
@@ -36,7 +36,6 @@ function tokenVerification(req, res, next) {
     return res.status(401).json({ message: 'Token não encontrado' }); 
   } 
   if (regToken.test(String(authorization)) === false) {
-    // console.log(authorization);
     return res.status(401).json({ message: 'Token inválido' });
   }
   next();
