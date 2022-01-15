@@ -90,7 +90,7 @@ function dateVerification(req, res, next) {
 
 function talkVerification(req, res, next) {
   const { talk } = req.body;
-  
+
   if (!talk || !talk.watchedAt || !talk.rate) {
     return res.status(400).json({
       message: 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios',
@@ -135,6 +135,39 @@ async function putTalk(req, res) {
  res.status(200).json(talkFile[talkIndex]);
 }
 
+async function deleteTalk(req, res) {
+  const { id } = req.params;
+
+  const talkFile = await fs.readFile(talker, 'utf-8')
+    .then((response) => JSON.parse(response));
+
+  const talkIndex = await talkFile.findIndex((t) => t.id === Number(id));
+  talkFile.splice(talkIndex, 1);
+  
+  await fs.writeFile(talker, JSON.stringify(talkFile))
+  .then(() => {
+   console.log('Arquivo escrito com sucesso!');
+ });
+
+  res.status(204).end();
+}
+
+async function searchTalk(req, res) {
+  const { searchTerm } = req.query;
+
+  const talkFile = await fs.readFile(talker, 'utf-8')
+  .then((response) => JSON.parse(response));
+
+  if (!searchTerm) {
+    return res.status(200).json(talkFile);
+  }
+  const filteredTalkers = talkFile.filter((t) => t.name === searchTerm);
+  if (!filteredTalkers) {
+    return res.status(200).json([]);
+  }
+ res.status(200).json(filteredTalkers);
+}
+
 module.exports = { 
   readTalkers,
   searchTalkers,
@@ -146,4 +179,6 @@ module.exports = {
   talkVerification,
   addUser,
   putTalk,
+  deleteTalk,
+  searchTalk,
 };

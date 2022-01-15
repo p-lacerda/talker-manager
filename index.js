@@ -11,6 +11,8 @@ const {
   talkVerification,
   addUser,
   putTalk,
+  deleteTalk,
+  searchTalk,
 } = require('./middlewares/middleManager');
 const { 
   passwordVerification,
@@ -31,6 +33,8 @@ app.get('/', (_request, response) => {
 
 app.get('/talker', readTalkers);
 
+app.get('/talker/search', tokenVerification, searchTalk);
+
 app.get('/talker/:id', searchTalkers);
 
 app.post('/login', passwordVerification, emailVerification, loginVerification);
@@ -40,6 +44,8 @@ nameVerification, ageVerification, talkVerification, rateVerification, dateVerif
 
 app.put('/talker/:id', tokenVerification,
 nameVerification, ageVerification, rateVerification, talkVerification, dateVerification, putTalk);
+
+app.delete('/talker/:id', tokenVerification, deleteTalk);
 
 app.listen(PORT, () => {
   console.log('Online');
