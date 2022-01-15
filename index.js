@@ -1,6 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { readTalkers, searchTalkers } = require('./middlewares/middleManager');
+const { 
+  readTalkers,
+  searchTalkers,
+  tokenVerification,
+  nameVerification,
+  ageVerification,
+  rateVerification,
+  dateVerification,
+  talkVerification,
+  addUser,
+} = require('./middlewares/middleManager');
 const { 
   passwordVerification,
   emailVerification,
@@ -23,6 +33,9 @@ app.get('/talker', readTalkers);
 app.get('/talker/:id', searchTalkers);
 
 app.post('/login', passwordVerification, emailVerification, loginVerification);
+
+app.post('/talker', tokenVerification,
+nameVerification, ageVerification, talkVerification, rateVerification, dateVerification, addUser);
 
 app.listen(PORT, () => {
   console.log('Online');

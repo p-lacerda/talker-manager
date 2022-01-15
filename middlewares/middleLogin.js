@@ -1,5 +1,5 @@
 // const fs = require('fs').promises;
-const generateToken = require('../helpers/generateToken');
+// const generateToken = require('../helpers/generateToken');
 
 const emailValidation = /\S+@\S+.\S+/;
 
@@ -25,8 +25,10 @@ function passwordVerification(req, res, next) {
   next();
 }
 
-async function loginVerification(req, res) {
-  return res.status(200).json({ token: generateToken(16) });
+function loginVerification(req, res) {
+  return res.status(200).json({ token:
+    '7mqaVRXJSp886CGr',
+  });
 }
 
 module.exports = { loginVerification, emailVerification, passwordVerification };
